@@ -5,6 +5,7 @@
 ### 将版本历史可视化并进行探索
 git log --graph
 
+![alt text](img/logGraph.png)
 
 ### 是谁最后修改了 README.md 文件？
 
@@ -36,12 +37,15 @@ ans:
 
 会将修改存储到stash栈中， 使工作区回到最后一次提交的状态
 
+![alt text](img/stash.png)
 
 ### 当执行 git log --all --oneline 时
 
 - git log 用于显示commit信息
 - --all 选项会显示所有分支的提交历史，而不仅仅是当前分支。
 - --oneline 选项会使每个提交只显示一行，通常包括提交的哈希值和提交信息。
+
+![alt text](img/logAll.png)
 
 ### 通过 git stash pop 命令来撤销 git stash 操作，什么时候会用到这一技巧？
 
