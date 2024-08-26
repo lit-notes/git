@@ -1,0 +1,110 @@
+
+\documentclass{../../../latex/lcm}
+
+
+\usepackage{tocloft}
+
+
+\title{git 练习}
+\author{蔺春名}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\clearpage
+
+\h{四 题}
+
+\hh{2}
+
+\hhh{将版本历史可视化并进行探索}
+
+\shCode{git log --graph}
+
+\img{logGraph}
+
+
+\hh{是谁最后修改了 README.md 文件？}
+
+\shCode{
+    git log -1 --format='\%an' -- README.md
+}
+
+
+\ans{yuzq}
+
+或者使用 \shCode{`--format="\%ae"`} 得到 email
+
+\ans{yuzq@sunwayworld.com}
+
+\hhh{最后一次修改 \_config.yml 文件中 collections: 行时的提交信息是什么？}
+
+\showSh{get_msg_of_changed_line}
+
+\ans{"Redo lectures as a collection"}
+
+\hh{4.}
+
+\begin{quote}
+    从 GitHub 上克隆某个仓库，修改一些文件。当您使用 git stash 会发生什么？当您执行 git log --all --oneline 时会显示什么？通过 git stash pop 命令来撤销 git stash 操作，什么时候会用到这一技巧？
+\end{quote}
+
+\hhh{GitHub 上克隆某个仓库，修改一些文件。当使用 git stash}
+
+
+会将修改存储到stash栈中， 使工作区回到最后一次提交的状态
+
+\img{stash}
+
+\hhh{当执行 git log --all --oneline 时}
+
+\begin{itemize}
+\item
+  git log 用于显示commit信息
+\item
+  --all 选项会显示所有分支的提交历史，而不仅仅是当前分支。
+\item
+  --oneline 选项会使每个提交只显示一行，通常包括提交的哈希值和提交信息。
+\end{itemize}
+
+\img{logAll}
+
+\hhh{通过 git stash pop 命令来撤销 git stash 操作，什么时候会用到这一技巧？}
+
+通过 git stash pop 命令来撤销 git stash 操作，什么时候会用到这一技巧？
+
+
+\hh{6.}
+
+\begin{quote}
+您可以通过执行
+
+\shCode{git config --global core.excludesfile ~/.gitignore_global}
+
+在 \verb|~/.gitignore_global| 中创建全局忽略规则。
+配置您的全局 gitignore 文件来自动忽略系统或编辑器的临时文件，例如 \verb|.DS_Store|
+\end{quote}
+
+\showSh{global_gitignore}
+
+\hh{5.}
+
+
+\begin{quote}
+请在 ~/.gitconfig 中创建一个别名，使您在运行 git graph 时，您可以得到 git log --all --graph --decorate --oneline 的输出结果；
+\end{quote}
+
+\showSh{alias}
+
+\url{https://github.com/lit-notes/it-notes}
+
+
+\input{20}
+
+
+\end{document}

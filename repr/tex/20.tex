@@ -1,0 +1,208 @@
+
+
+
+\h{20个练习}
+
+
+\hh{init missing-semester-cn}
+
+\begin{lstlisting}
+mkdir missing-semester-cn
+cd missing-semester-cn
+git init -b main
+\end{lstlisting}
+
+
+\hh{设置remote}
+
+\shCode{git remote add origin https://github.com/missing-semester-cn/missing-semester-cn.github.io.git}
+
+
+
+\hh{下载并使用github cli(gh)}
+
+项目仓库: \url{https://github.com/cli/cli}
+
+
+Windows下解压其bin/gh.exe到PATH路径下即可
+
+\hhh{登录}
+
+
+\shCode{gh auth login}
+按提示登录即可
+
+按个人常用认证选项：
+
+\shCode{gh auth login --git-protocol=https --web}
+
+
+\hh{fork 仓库}
+
+\shCode{gh repo fork https://github.com/missing-semester-cn/missing-semester-cn.github.io.git}
+
+
+\hh{fork之后设置为fork的仓库}
+
+
+
+\begin{lstlisting}
+  git remote add upstream https://github.com/missing-semester-cn/missing-semester-cn.github.io.git
+  git remote set-url git@github.com:lit-notes/missing-semester-cn.github.io.git
+\end{lstlisting}
+
+
+\hh{查看此时remote}
+
+\shCode{git remote -v}
+
+
+\begin{verbatim}
+origin https://github.com/lit-notes/missing-semester-cn.github.io.git (fetch)
+origin https://github.com/lit-notes/missing-semester-cn.github.io.git (push)
+upstream https://github.com/missing-semester-cn/missing-semester-cn.github.io.git (fetch)
+upstream https://github.com/missing-semester-cn/missing-semester-cn.github.io.git (push)
+\end{verbatim}
+
+
+\hh{pull}
+
+\shCode{git pull}
+
+\begin{verbatim}
+remote: Enumerating objects: 133, done.
+remote: Counting objects: 100% (124/124), done.
+remote: Compressing objects: 100% (47/47), done.
+remote: Total 89 (delta 60), reused 66 (delta 42), pack-reused 0 (from 0)
+Unpacking objects: 100% (89/89), 30.93 KiB | 52.00 KiB/s, done.
+\end{verbatim}
+
+
+\hh{增加submodule}
+
+\begin{lstlisting}
+    cd ..
+    git submodule add https://github.com/missing-semester-cn/missing-semester-cn.github.io.git ./missing-semester-cn.github.io
+\end{lstlisting}
+
+\hh{添加 solution 为 submodule}
+
+\shCode{git submodule add https://github.com/missing-semester-cn/missing-notes-and-solutions missing-notes-and-solutions}
+
+\begin{verbatim}
+Cloning into 'xxx/homework/cs_utils/missing-notes-and-solutions'...
+remote: Enumerating objects: 330, done.
+remote: Counting objects: 100% (41/41), done.
+remote: Compressing objects: 100% (25/25), done.
+remote: Total 330 (delta 14), reused 30 (delta 10), pack-reused 289 (from 1)
+Receiving objects: 100% (330/330), 14.94 MiB | 5.51 MiB/s, done.
+Resolving deltas: 100% (122/122), done.
+\end{verbatim}
+
+
+\hh{重置文件内容}
+
+\hhh{修改文件}
+\begin{lstlisting}
+cd git/missing-semester-cn.github.io
+echo something >> _config.yml
+\end{lstlisting}
+
+\hhh{恢复}
+\shCode{git checkout HEAD -- _config.yml}
+
+
+\hh{基于当前本地修改新建分支}
+
+\begin{lstlisting}
+git stash
+git checkout -b temp
+git stash apply
+\end{lstlisting}
+
+
+\hh{提交commit}
+
+\begin{lstlisting}
+git add .
+git commit -m "feat: xxx"
+\end{lstlisting}
+
+
+\hh{pick新分支的修改}
+
+\begin{lstlisting}
+nhash=`git log -1 --format=%h'
+git checkout -
+git cherry-pick $nhash
+\end{lstlisting}
+
+\hh{全局设定默认编辑器}
+
+\begin{lstlisting}
+git config --global core.editor vim
+\end{lstlisting}
+
+\begin{quote}
+否则 Linux 下默认有可能是nano
+
+\end{quote}
+
+\hh{新建github仓库}
+
+首先假定 upstream 已经先设置
+
+\begin{lstlisting}
+gh repo create --source-. --remote=upstream
+\end{lstlisting}
+
+或者
+
+\begin{lstlisting}
+gh repo create xxx
+\end{lstlisting}
+
+
+\hh{上传}
+\begin{lstlisting}
+git push upstream
+\end{lstlisting}
+
+\hh{获得仓库信息}
+
+\begin{lstlisting}
+gh repo view
+\end{lstlisting}
+
+输出 描述 和 README
+
+
+\hh{通过branch+merge来新加特性}
+
+\begin{lstlisting}
+git branch new-feat
+git checkout new-feat
+# ... make some change here, then
+git commit -m "impr: some feature"
+git checkout -
+git merge new-feat
+\end{lstlisting}
+
+\hh{添加commit， 从文件中读取内容}
+
+\begin{lstlisting}
+git commit -m "@file"
+\end{lstlisting}
+
+\begin{quotation}
+    假设file中已经写好了commit信息
+\end{quotation}
+
+\hh{使用mergetool处理冲突}
+
+在出现合并冲突等问题时：
+
+\begin{lstlisting}
+git config merge.tool vimdiff
+git mergetool
+\end{lstlisting}
